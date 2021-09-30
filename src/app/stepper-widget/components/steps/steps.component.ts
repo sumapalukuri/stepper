@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatTab, MatTabChangeEvent } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { StepModel } from '../../models/steps.model';
 import { StepsService } from '../../service/steps.service';
@@ -9,30 +10,18 @@ import { StepsService } from '../../service/steps.service';
   styleUrls: ['./steps.component.scss']
 })
 export class StepsComponent implements OnInit {
-
-  steps: StepModel[] = []
-  currentStep: StepModel = {} as StepModel;
-
+  @Input() steps: StepModel[] = [];
+  @Output() valueChange: EventEmitter<number> = new EventEmitter();
   constructor(private stepsService: StepsService) { 
-    this.steps = [];
   }
   /**
    * Function to define number of steps and current step
    */
   ngOnInit(): void {
-   this.stepsService.steps$.subscribe(response => {
-     this.steps = response;
-   });
-   this.stepsService.currentStep$.subscribe(response => {
-    this.currentStep = response;
-   })
   }
-/**
- * Function to set the current step on click
- * @param step : Step
- */
-  onStepClick(step: StepModel) {
-    this.stepsService.setCurrentStep(step);
+  
+  onClickOfTab(tab: MatTabChangeEvent) {
+    this.valueChange.emit(tab.index)
   }
 
 }

@@ -1,0 +1,6 @@
+<ng-content></ng-content>
+<button *ngFor="let tab of tabs" [ngClass]="{selected: isSelected(tab)}" (click)="onTabClick(tab)"
+    [disabled]="!tab.step.isNavigable">
+    {{tab.step.stepName}}
+</button> {{currentTab?.step?.template}}
+<div><template [ngTemplateOutlet]="currentTab?.step?.template"></template></div>

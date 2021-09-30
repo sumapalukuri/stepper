@@ -1,0 +1,28 @@
+button {
+    float: left;
+    padding: 10px;
+    background-color: #D0CCD0;
+    border: 1px solid grey;
+    color: #828181;
+    font-size: 14px;
+    cursor: pointer;
+    height:43px;
+    width: 103px;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 15px 50px;
+    border-right-width: thin
+  }
+  
+  .selected {
+    background-color: #FBFCFF;
+    color: #333;
+  }
+  
+  div {
+    clear: both;
+    padding: 10px;
+    background: #FBFCFF;
+    min-height: 100px;
+    border-radius: 0 5px 5px 5px;
+  }

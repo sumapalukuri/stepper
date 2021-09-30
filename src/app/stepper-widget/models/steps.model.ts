@@ -3,4 +3,6 @@ export interface StepModel {
     isComplete: boolean;
     stepName: string;
     isNavigable: boolean;
+    isPortfolioStep: boolean;
+    template?: any;
 }

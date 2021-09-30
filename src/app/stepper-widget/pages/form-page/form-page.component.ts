@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnChanges, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { StepModel } from '../../models/steps.model';
 import { StepsService } from '../../service/steps.service';
@@ -6,39 +6,31 @@ import { StepsService } from '../../service/steps.service';
 @Component({
   selector: 'app-form-page',
   templateUrl: './form-page.component.html',
-  styleUrls: ['./form-page.component.scss']
+  styleUrls: ['./form-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormPageComponent implements OnInit {
+export class FormPageComponent implements OnInit, AfterViewInit {
 
-  currentStep: StepModel = {} as StepModel;
-  currentStepSub!: Subscription;
-
+  steps: StepModel[] = []
+  @ViewChild('content', { read: TemplateRef }) content: TemplateRef<any>|undefined;
+  currentIndex!: number;
   constructor(
-    private stepsService: StepsService) { }
+    private stepsService: StepsService) { 
+    }
 
   ngOnInit(): void {
-    this.currentStepSub = this.stepsService.currentStep$.subscribe((step: StepModel) => {
-      this.currentStep = step;
-    });
+    this.stepsService.steps$.subscribe(response => {
+      this.steps = response;
+    })
+    this.currentIndex = 0;
   }
 
-  onNextStep() {
-    if (!this.stepsService.isLastStep()) {
-      this.stepsService.moveToNextStep();
-    } else {
-      this.onSubmit();
-    }
-  }
-
-  showButtonLabel() {
-    return !this.stepsService.isLastStep() ? 'Continue' : 'Finish';
-  }
-
-  ngOnDestroy(): void {
-    this.currentStepSub.unsubscribe();
-  }
-
-  onSubmit(): void {
-  }
-
+   ngAfterViewInit() {
+     this.steps.forEach(step => {
+       step.template = this.content
+     })
+   }
+   selectedChange(event: any) {
+    this.currentIndex = event;
+   }
 }

@@ -1,0 +1,10 @@
+<app-tabs (valueChange) = selectedChange($event)>
+    <ng-container *ngFor="let step of steps">
+        <app-tab [step] = step></app-tab>
+    </ng-container>
+</app-tabs>
+<!-- <button (click)="onClickOfNext()">Next</button> -->
+<ng-template #content>
+    <p>I am in step {{currentStep?.stepName}}</p>
+    <button (click)="performAction()">Perform Action</button>
+    </ng-template>

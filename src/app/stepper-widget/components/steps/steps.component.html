@@ -1,8 +1,8 @@
-<div class="form-steps-container">
-    <ng-container *ngFor="let step of steps; let i = index;">
-        <div (click)="onStepClick(step)"
-            [ngClass]="{ 'step-complete': step.isComplete, 'step-incomplete': !step.isComplete, 'step-current': currentStep.stepIndex === step.stepIndex }"
-            class="step-bubble">{{ step.stepName }}</div>
-        <div *ngIf="i < (steps).length - 1" class="step-divider"></div>
+<mat-tab-group (selectedTabChange)="onClickOfTab($event)">
+    <ng-container *ngFor="let tab of steps">
+      <mat-tab label="{{ tab.stepName }}" [disabled]=!tab.isNavigable>
+        <ng-container [ngTemplateOutlet]='tab?.template'></ng-container>
+      </mat-tab>
     </ng-container>
-</div>
+  </mat-tab-group>
+  <ng-content></ng-content>

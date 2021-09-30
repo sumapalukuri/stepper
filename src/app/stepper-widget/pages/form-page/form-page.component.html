@@ -1,21 +1,7 @@
-<div class="form-page-container">
-    <app-steps></app-steps>
-  <div class="step-page-container">
-    <div class="form-step">
-        <ng-container>
-            <ng-container>
-                <app-steps-template [step]="currentStep"></app-steps-template>
-            </ng-container>
-            <!-- <ng-container *ngSwitchCase="'2'">
-              <app-steps-template [step]="currentStep"></app-steps-template>
-            </ng-container>
-            <ng-container *ngSwitchCase="'3'">
-              <app-steps-template [step]="currentStep"></app-steps-template>
-            </ng-container> -->
-        </ng-container>
-    </div>
-  </div>
-  <button (click)="onNextStep()" [disabled]="!currentStep?.isComplete" class="form-continue-btn common-btn">
-    {{ showButtonLabel() }}
-  </button>
-</div>
+
+<app-steps [steps]="steps" (valueChange) = selectedChange($event)></app-steps>
+<button>Back</button>
+<button>Next</button>
+<ng-template #content>
+<p>I am in step- {{steps[currentIndex]?.stepName}}</p>
+</ng-template>

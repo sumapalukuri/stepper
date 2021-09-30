@@ -4,12 +4,17 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'steps-wizard',
+    redirectTo: 'tabs-wizard',
     pathMatch: 'full'
   },
   {
     path: 'steps-wizard',
     loadChildren: () => import("./stepper-widget/stepper-widget.module").then(module => module.StepperWidgetModule)
+  },
+  {
+    path: 'tabs-wizard',
+    loadChildren: () => import("./wizard/wizard.module").then(module => module.WizardModule)
+
   }
 ];
 

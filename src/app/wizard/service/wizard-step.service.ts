@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { StepModel } from '../models/steps.model';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { StepModel } from 'src/app/stepper-widget/models/steps.model';
 
 const STEPS = [
   { stepIndex: 1, isComplete: false, stepName: 'First Step', isNavigable: true, isPortfolioStep: true },
   { stepIndex: 2, isComplete: false, stepName: 'Second Step', isNavigable: false, isPortfolioStep: true },
-  { stepIndex: 3, isComplete: false, stepName: 'Third Step', isNavigable: false , isPortfolioStep: true }
+  { stepIndex: 3, isComplete: false, stepName: 'Third Step', isNavigable: false, isPortfolioStep: true  },
+  { stepIndex: 4, isComplete: false, stepName: 'Forth Step', isNavigable: false, isPortfolioStep: false  },
+  { stepIndex: 5, isComplete: false, stepName: 'Fifth Step', isNavigable: false, isPortfolioStep: false  },
+  { stepIndex: 6, isComplete: false, stepName: 'Sixth Step', isNavigable: false, isPortfolioStep: false  },
 ];
 const initialCurrentStepValue = {
   stepIndex: 1,
@@ -14,10 +17,11 @@ const initialCurrentStepValue = {
   isNavigable: true,
   isPortfolioStep: true
 }
+
 @Injectable({
   providedIn: 'root'
 })
-export class StepsService {
+export class WizardStepService {
 
   steps$: BehaviorSubject<StepModel[]> = new BehaviorSubject<StepModel[]>(STEPS);
   stepsObservable = this.steps$.asObservable();
@@ -26,6 +30,10 @@ export class StepsService {
 
   constructor() {
     this.currentStep$.next(this.steps$.value[0]);
+  }
+
+  updateSteps(steps: StepModel[]):void {
+    this.steps$.next(steps);
   }
 /**
  * Function used to set the current step
